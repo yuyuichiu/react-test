@@ -13,6 +13,10 @@ export class Game extends React.Component {
     }
   }
 
+  componentDidMount() {
+    document.title = "Tic Tac Toe";
+  }
+
   // onClick
   cellClicked(idx) {
     // make a temp board for new changes
@@ -62,7 +66,7 @@ export class Game extends React.Component {
   render() {
     let historyItem = this.state.history.slice();
     historyItem = historyItem.map((h, idx) => (
-      <li><button className="undo" onClick={() => this.moveTimeline(idx)}>{idx === 0 ? `To start` : `Go to step #${idx}`}</button></li>
+      <li key={idx}><button className="undo" onClick={() => this.moveTimeline(idx)}>{idx === 0 ? `To start` : `Go to step #${idx}`}</button></li>
     ));
 
     return (
