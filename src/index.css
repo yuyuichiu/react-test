@@ -15,79 +15,89 @@ body {
     justify-content: center;
 }
 
-  ol, ul {
-    padding-left: 30px;
-  }
-  
-  .board-row:after {
-    clear: both;
-    content: "";
-    display: table;
-  }
-  
-  .status {
-    margin-bottom: 10px;
-  }
-  
-  .square {
-    background: #fff;
-    border: 1px solid #999;
-    float: left;
-    font-size: 24px;
-    font-weight: bold;
-    line-height: 34px;
-    height: 34px;
-    margin-right: -1px;
-    margin-top: -1px;
-    padding: 0;
-    text-align: center;
-    width: 34px;
-  }
+ol, ul {
+  padding-left: 30px;
+}
 
-  .square:hover{
-    background: #eee;
-    cursor: pointer;
-  }
+.board-row:after {
+  clear: both;
+  content: "";
+  display: table;
+}
 
-  .square:active{
-    background: #ddd;
-  }
-  
-  .square:focus {
-    outline: none;
-  }
-  
-  .kbd-navigation .square:focus {
-    background: #ddd;
-  }
-  
-  .game {
-    display: flex;
-    flex-direction: row;
-  }
-  
-  .game-info {
-    margin-left: 20px;
-  }
-  
-  ul{
-      list-style-type: none;
-      padding-left: 0px;
-  }
+.status {
+  margin-bottom: 10px;
+}
 
-  .undo{
-      font-family: inherit;
-      background-color: #cdddff;
-      color: #0f3fa7;
-      border: 2px solid #0954f7;
-      border-radius: 5px;
-      font-size: 14px;
-      padding: 3px 5px;
-      margin: 5px 0;
-      cursor: pointer;
-  }
+.square {
+  background: #fff;
+  border: 1px solid #999;
+  float: left;
+  font-size: 24px;
+  font-weight: bold;
+  line-height: 34px;
+  height: 34px;
+  margin-right: -1px;
+  margin-top: -1px;
+  padding: 0;
+  text-align: center;
+  width: 34px;
+}
 
+.square:hover{
+  background: #eee;
+  cursor: pointer;
+}
 
+.square:active{
+  background: #ddd;
+}
+
+.square:focus {
+  outline: none;
+}
+
+.kbd-navigation .square:focus {
+  background: #ddd;
+}
+
+.game {
+  display: flex;
+  flex-direction: row;
+}
+
+.game-info {
+  margin-left: 20px;
+}
+
+ul{
+  list-style-type: none;
+  padding-left: 0px;
+}
+
+.undo{
+  font-family: inherit;
+  background-color: #cdddff;
+  color: #0f3fa7;
+  border: 2px solid #0954f7;
+  border-radius: 5px;
+  font-size: 14px;
+  padding: 3px 5px;
+  margin: 5px 0;
+  cursor: pointer;
+}
+
+.undo.current{  
+  background-color: #f7ffaf;
+  border: 2px solid #e1ee25;
+  color: #778b1b;
+}
+
+.undo.pasted{
+  background-color: #c5d2ee;
+  border: 2px solid #90b2fc;
+  color: #597ac0;
+}
 
 
 
