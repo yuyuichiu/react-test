@@ -44,6 +44,10 @@ ol, ul {
   width: 34px;
 }
 
+.square.victory, .square.victory:hover {
+  background: rgb(255, 230, 0);
+}
+
 .square:hover{
   background: #eee;
   cursor: pointer;

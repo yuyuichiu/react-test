@@ -8,13 +8,10 @@ export class Game extends React.Component {
       status: 'Next player: X',
       xIsNext: true,
       step: 0,
+      reverse: false,
       board: ['','','','','','','','',''],
       history: [{ past: ['','','','','','','','',''] }],
     }
-  }
-
-  componentDidMount() {
-    document.title = "Tic Tac Toe";
   }
 
   // onClick
@@ -37,6 +34,7 @@ export class Game extends React.Component {
       step: this.state.step + 1,
       history: newHistory,
     })
+    styleUndoButtons(this.state.step + 1)
 
     // Check win/tie conditions
     if(checkWin(squares)) {
@@ -45,22 +43,45 @@ export class Game extends React.Component {
     if(!squares.includes('')) {
       this.setState({ board: squares, status: `Tie!` })
       return }
-
-    styleUndoButtons(this.state.step + 1)
   }
 
   // History Editing
   moveTimeline(idx) {
     // Edit the board to previous state
+    let updatedNext = !this.state.reverse ? idx % 2 === 0 : !(idx % 2 === 0);
     this.setState({
       board: this.state.history[idx].past,
       step: idx,
-      xIsNext: idx % 2 === 0 ? true : false,
-      status: `Next player: ${idx % 2 === 0 ? 'X' : 'O'}`
+      xIsNext: updatedNext,
+      status: `Next player: ${updatedNext ? 'X' : 'O'}`
     })
 
-    // Style the undo buttons
+    // Style the undo button and cells
     styleUndoButtons(idx)
+    styleCells(this.state.history[idx].past);
+  }
+
+  // Swap player order
+  swapOrder() {
+    // Return if the current game was ended
+    if(checkWin(this.state.board) || !this.state.board.includes('')) return
+
+    // Flip the reverse switch and update the board
+    let updatedBoard = this.state.board.slice();
+    updatedBoard = updatedBoard.map(c => c === "X" ? "O" : c === "O" ? "X" : "");
+
+    let updatedHistory = this.state.history.slice();
+    updatedHistory = updatedHistory.map((h) => {
+      return { past: h.past.map(c => c === "X" ? "O" : c === "O" ? "X" : "") }
+    });
+
+    this.setState({
+      xIsNext: !this.state.xIsNext,
+      status: `Next player: ${!this.state.xIsNext ? 'X' : 'O'}`,
+      board: updatedBoard,
+      history: updatedHistory,
+      reverse: !this.state.reverse
+    })
   }
 
   render() {
@@ -73,6 +94,7 @@ export class Game extends React.Component {
     <div className="game">
       <div className="game-board">
       <Board board={this.state.board} onClick={(i) => this.cellClicked(i)}/>
+      <button onClick={() => this.swapOrder()}>Switch Order</button>
       </div>
       <div className="game-info">
       <div>{this.state.status}</div>
@@ -90,14 +112,23 @@ function checkWin(board) {
     [0,3,6],[1,4,7],[2,5,8],
     [0,4,8],[2,4,6]
   ]
+  const cells = document.querySelectorAll('.square');
+  cells.forEach((c) => c.classList.remove('victory'));
 
   // return winner when win condition met
   let result = false;
   winPath.forEach((p) => {
     if(board[p[0]] === 'X' && board[p[1]] === 'X' && board[p[2]] === 'X') {
       result = 'X';
+      cells[p[0]].classList.add('victory')
+      cells[p[1]].classList.add('victory')
+      cells[p[2]].classList.add('victory')
+      
     } else if(board[p[0]] === 'O' && board[p[1]] === 'O' && board[p[2]] === 'O') {
       result = 'O';
+      cells[p[0]].classList.add('victory')
+      cells[p[1]].classList.add('victory')
+      cells[p[2]].classList.add('victory')
     }
   })
 
@@ -112,4 +143,10 @@ function styleUndoButtons(step) {
       if(i > step) btn.classList.add("pasted");
       else if (i === step) btn.classList.add('current')
     })
+}
+
+function styleCells(board) {
+  const cells = document.querySelectorAll('.square');
+  cells.forEach((c) => c.classList.remove('victory'));
+  checkWin(board);
 }
